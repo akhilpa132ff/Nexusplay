@@ -1,0 +1,130 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEXUSPLAY | Messages</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#070b14;color:#fff;font-family:Arial,sans-serif}
+header{padding:18px;background:#0d1424;border-bottom:1px solid #173c65}
+.logo{font-size:23px;font-weight:900;color:#36bfff}
+.logo span{color:#a45cff}
+main{max-width:1100px;margin:auto;padding:20px}
+h2{color:#36bfff}
+.layout{display:grid;grid-template-columns:300px 1fr;gap:15px;height:70vh;min-height:450px}
+.panel{background:#101a2b;border:1px solid #1c3554;border-radius:14px;overflow:hidden}
+.search{width:100%;padding:13px;background:#080f1c;border:1px solid #294667;border-radius:8px;color:white;margin-bottom:12px}
+.chat-list{padding:12px}
+.person{padding:13px;border-radius:10px;cursor:pointer;margin-bottom:7px;background:#142238;border:1px solid transparent}
+.person:hover,.person.active{border-color:#36bfff;background:#172b45}
+.person small{color:#8fa9c5}
+.chat{display:flex;flex-direction:column;height:100%}
+.chat-head{padding:17px;border-bottom:1px solid #29405d;font-weight:bold}
+.messages{padding:18px;flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:12px}
+.bubble{padding:12px 15px;border-radius:13px;max-width:75%;background:#1a2b43;align-self:flex-start;overflow-wrap:anywhere}
+.mine{background:#075b91;align-self:flex-end}
+.empty{color:#91a4bb;text-align:center;margin:auto}
+.send{display:flex;gap:8px;padding:12px;border-top:1px solid #29405d}
+.send input{flex:1;min-width:0;padding:13px;background:#080f1c;border:1px solid #294667;border-radius:8px;color:white}
+button{background:#078ed2;border:0;color:white;padding:12px 17px;border-radius:8px;cursor:pointer;font-weight:bold}
+button:hover{background:#20baff}
+.actions{padding:10px 15px;display:flex;gap:10px}
+.actions button{background:#25334a;font-size:12px}
+footer{text-align:center;color:#71849e;padding:20px}
+@media(max-width:650px){
+main{padding:12px}
+.layout{grid-template-columns:1fr;height:auto}
+.panel:first-child{max-height:210px;overflow-y:auto}
+.chat{height:60vh;min-height:400px}
+}
+</style>
+</head>
+<body>
+<header><div class="logo">NEXUS<span>PLAY</span></div></header>
+<main>
+<h2>Messages</h2>
+<p style="color:#91a4bb">Connect with your gaming community.</p>
+
+<div class="layout">
+<section class="panel">
+<div class="chat-list">
+<input class="search" id="search" placeholder="Search players..." oninput="filterChats()">
+<div id="people">
+<div class="person active" data-name="NovaX" onclick="openChat('NovaX')">
+<strong>NovaX</strong><br><small>Ready for the next match?</small>
+</div>
+<div class="person" data-name="ShadowYT" onclick="openChat('ShadowYT')">
+<strong>ShadowYT</strong><br><small>Let's play today!</small>
+</div>
+<div class="person" data-name="Phantom" onclick="openChat('Phantom')">
+<strong>Phantom</strong><br><small>GG!</small>
+</div>
+<div class="person" data-name="Blaze" onclick="openChat('Blaze')">
+<strong>Blaze</strong><br><small>See you in scrims.</small>
+</div>
+</div>
+</div>
+</section>
+
+<section class="panel chat">
+<div class="chat-head" id="chatName">NovaX</div>
+<div class="messages" id="messages">
+<div class="bubble">Hey! Ready for the next match?</div>
+<div class="bubble mine">Yes! Let's go.</div>
+<div class="bubble">Great. See you in the game!</div>
+</div>
+<div class="send">
+<input id="messageInput" placeholder="Write a message..." maxlength="500">
+<button onclick="sendMessage()">Send</button>
+</div>
+<div class="actions">
+<button onclick="alert('Block feature will be connected to the backend.')">Block</button>
+<button onclick="alert('Report feature will be connected to the backend.')">Report</button>
+</div>
+</section>
+</div>
+</main>
+<footer>© 2026 NEXUSPLAY • Connect. Compete. Conquer.</footer>
+
+<script>
+let current="NovaX";
+
+function openChat(name){
+current=name;
+document.getElementById("chatName").textContent=name;
+document.querySelectorAll(".person").forEach(p=>{
+p.classList.toggle("active",p.dataset.name===name);
+});
+document.getElementById("messages").innerHTML=
+'<div class="empty">This is a demo conversation with '+name+'.</div>';
+}
+
+function sendMessage(){
+const input=document.getElementById("messageInput");
+const value=input.value.trim();
+if(!value)return;
+
+const bubble=document.createElement("div");
+bubble.className="bubble mine";
+bubble.textContent=value;
+document.getElementById("messages").appendChild(bubble);
+input.value="";
+document.getElementById("messages").scrollTop=
+document.getElementById("messages").scrollHeight;
+}
+
+document.getElementById("messageInput").addEventListener("keydown",e=>{
+if(e.key==="Enter")sendMessage();
+});
+
+function filterChats(){
+const query=document.getElementById("search").value.toLowerCase();
+document.querySelectorAll(".person").forEach(p=>{
+p.style.display=p.dataset.name.toLowerCase().includes(query)?"block":"none";
+});
+}
+</script>
+</body>
+</html>
