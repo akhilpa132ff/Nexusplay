@@ -1,0 +1,78 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NEXUSPLAY | Players</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#070b14;color:white;font-family:Arial,sans-serif}
+header{padding:20px 6%;display:flex;justify-content:space-between;background:#0b1220;border-bottom:1px solid #193b50}
+.logo{color:#00d9ff;font-size:23px;font-weight:900;letter-spacing:2px}
+a{color:#00d9ff;text-decoration:none}
+main{max-width:1100px;margin:auto;padding:35px 20px 90px}
+.hero{padding:40px 25px;border:1px solid #17465d;border-radius:18px;background:linear-gradient(120deg,#10243a,#21153a);animation:fade .8s}
+.tag{color:#00d9ff;letter-spacing:3px;font-size:12px}
+h1{font-size:clamp(32px,6vw,52px);margin:15px 0}
+h1 span{color:#00d9ff}
+p{color:#a9bacb;line-height:1.7}
+.filters{display:flex;gap:12px;flex-wrap:wrap;margin:25px 0}
+input,select{background:#101827;color:white;border:1px solid #28435a;border-radius:8px;padding:12px}
+input{flex:1;min-width:190px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:17px}
+.card{background:#101827;border:1px solid #243b50;border-radius:13px;padding:22px;text-align:center;transition:.3s;animation:fade .7s}
+.card:hover{transform:translateY(-5px);border-color:#00d9ff;box-shadow:0 0 22px #00d9ff22}
+.avatar{width:65px;height:65px;border-radius:50%;margin:auto;background:linear-gradient(135deg,#00d9ff,#8b5cf6);display:grid;place-items:center;font-size:28px}
+.card h2{margin:13px 0 7px}
+.meta{font-size:13px;color:#a9bacb;margin:13px 0}
+button{cursor:pointer;background:#00d9ff;color:#00131b;border:0;padding:10px 16px;border-radius:7px;font-weight:bold}
+@keyframes fade{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:750px){.grid{grid-template-columns:1fr}main{padding:22px 14px}}
+</style>
+</head>
+<body>
+<header><div class="logo">NEXUSPLAY</div><a href="home.html">← Home</a></header>
+<main>
+<section class="hero">
+<div class="tag">DISCOVER YOUR NEXT TEAMMATE</div>
+<h1>MEET THE <span>PLAYERS.</span></h1>
+<p>Discover gaming profiles and connect with players from different countries and games.</p>
+</section>
+<div class="filters">
+<input id="search" placeholder="Search player or country..." oninput="filterPlayers()">
+<select id="game" onchange="filterPlayers()">
+<option value="all">All games</option>
+<option>BGMI</option><option>Free Fire MAX</option><option>COD Mobile</option><option>Mobile Legends</option>
+</select>
+<select id="country" onchange="filterPlayers()">
+<option value="all">All countries</option>
+<option>India</option><option>Nepal</option><option>Bangladesh</option>
+</select>
+</div>
+<section class="grid" id="players">
+<article class="card" data-game="BGMI" data-country="India"><div class="avatar">🎯</div><h2>NovaX</h2><p>Competitive player</p><div class="meta">🎮 BGMI · 🇮🇳 India</div><button onclick="connect('NovaX')">View Profile</button></article>
+<article class="card" data-game="Free Fire MAX" data-country="Nepal"><div class="avatar">🔥</div><h2>ShadowYT</h2><p>Squad player</p><div class="meta">🔥 Free Fire MAX · 🇳🇵 Nepal</div><button onclick="connect('ShadowYT')">View Profile</button></article>
+<article class="card" data-game="COD Mobile" data-country="India"><div class="avatar">⚔️</div><h2>Phantom</h2><p>Multiplayer player</p><div class="meta">⚔️ COD Mobile · 🇮🇳 India</div><button onclick="connect('Phantom')">View Profile</button></article>
+<article class="card" data-game="Mobile Legends" data-country="Bangladesh"><div class="avatar">🌟</div><h2>Blaze</h2><p>Team player</p><div class="meta">🌟 Mobile Legends · 🇧🇩 Bangladesh</div><button onclick="connect('Blaze')">View Profile</button></article>
+</section>
+<p style="font-size:12px;margin-top:25px">Demo profiles only. Real player search, country-based discovery, messaging and statistics require user accounts and backend data.</p>
+</main>
+<script>
+function filterPlayers(){
+ let q=document.getElementById('search').value.toLowerCase();
+ let game=document.getElementById('game').value;
+ let country=document.getElementById('country').value;
+ document.querySelectorAll('.card').forEach(c=>{
+ let match=c.innerText.toLowerCase().includes(q);
+ let gameMatch=game==='all'||c.dataset.game===game;
+ let countryMatch=country==='all'||c.dataset.country===country;
+ c.style.display=match&&gameMatch&&countryMatch?'block':'none';
+ });
+}
+function connect(name){
+ alert(name+' is a demo profile. Real profiles and connections will be enabled after backend setup.');
+}
+</script>
+</body>
+</html>
