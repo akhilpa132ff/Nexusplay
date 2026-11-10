@@ -1,0 +1,127 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEXUSPLAY | Notifications</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#070b14;color:#fff;font-family:Arial,sans-serif}
+header{padding:18px;background:#0d1424;border-bottom:1px solid #173c65}
+.logo{font-size:23px;font-weight:900;color:#36bfff}
+.logo span{color:#a45cff}
+main{max-width:850px;margin:auto;padding:22px}
+h2{color:#36bfff}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+button{background:#078ed2;color:white;border:0;padding:10px 15px;border-radius:8px;cursor:pointer;font-weight:bold}
+button:hover{background:#20baff}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}
+.filters button{background:#17263b}
+.filters button.active{background:#078ed2}
+.notice{background:#101a2b;border:1px solid #203b5b;border-radius:12px;padding:16px;margin-bottom:12px;display:flex;gap:13px;align-items:flex-start;animation:appear .3s ease}
+.notice.unread{border-left:4px solid #36bfff}
+.symbol{font-size:23px}
+.content{flex:1}
+.content p{margin:6px 0;color:#b0bfd1}
+.time{font-size:12px;color:#8298b2}
+.tag{font-size:11px;color:#36bfff}
+.empty{text-align:center;color:#91a4bb;padding:40px}
+@keyframes appear{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:550px){main{padding:13px}.notice{padding:12px}}
+</style>
+</head>
+<body>
+<header><div class="logo">NEXUS<span>PLAY</span></div></header>
+<main>
+<div class="top">
+<div>
+<h2>Notifications</h2>
+<p style="color:#91a4bb">Stay updated with your esports activity.</p>
+</div>
+<button onclick="markAll()">Mark all as read</button>
+</div>
+
+<div class="filters">
+<button class="active" onclick="filter('all',this)">All</button>
+<button onclick="filter('unread',this)">Unread</button>
+<button onclick="filter('tournament',this)">Tournaments</button>
+<button onclick="filter('social',this)">Social</button>
+<button onclick="filter('rewards',this)">Rewards</button>
+</div>
+
+<div id="notices">
+<div class="notice unread" data-type="tournament">
+<div class="symbol">🏆</div>
+<div class="content">
+<strong>Tournament reminder</strong>
+<p>Your upcoming tournament is starting soon!</p>
+<span class="tag">TOURNAMENT</span>
+<div class="time">Just now</div>
+</div>
+</div>
+
+<div class="notice unread" data-type="social">
+<div class="symbol">👥</div>
+<div class="content">
+<strong>Team invitation</strong>
+<p>NovaX invited you to join their team.</p>
+<span class="tag">SOCIAL</span>
+<div class="time">10 minutes ago</div>
+</div>
+</div>
+
+<div class="notice" data-type="rewards">
+<div class="symbol">🪙</div>
+<div class="content">
+<strong>Quest available</strong>
+<p>A new daily quest is available. Complete it to earn Nexus Coins.</p>
+<span class="tag">REWARDS</span>
+<div class="time">1 hour ago</div>
+</div>
+</div>
+
+<div class="notice" data-type="social">
+<div class="symbol">💬</div>
+<div class="content">
+<strong>New group activity</strong>
+<p>Your gaming community has a new discussion.</p>
+<span class="tag">SOCIAL</span>
+<div class="time">3 hours ago</div>
+</div>
+</div>
+
+<div class="notice" data-type="tournament">
+<div class="symbol">🎮</div>
+<div class="content">
+<strong>New tournament</strong>
+<p>A new esports tournament has been listed.</p>
+<span class="tag">TOURNAMENT</span>
+<div class="time">Yesterday</div>
+</div>
+</div>
+</div>
+<div class="empty" id="empty" style="display:none">No notifications found.</div>
+</main>
+<script>
+function filter(type,button){
+document.querySelectorAll(".filters button").forEach(b=>b.classList.remove("active"));
+button.classList.add("active");
+let visible=0;
+document.querySelectorAll(".notice").forEach(n=>{
+let show=type==="all"||
+(type==="unread"&&n.classList.contains("unread"))||
+n.dataset.type===type;
+n.style.display=show?"flex":"none";
+if(show)visible++;
+});
+document.getElementById("empty").style.display=visible?"none":"block";
+}
+function markAll(){
+document.querySelectorAll(".notice").forEach(n=>n.classList.remove("unread"));
+const active=document.querySelector(".filters button.active");
+if(active)filter("all",active);
+}
+</script>
+</body>
+</html>
