@@ -1,0 +1,101 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEXUSPLAY | Tournaments</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--blue:#00d9ff;--bg:#070b14}
+body{background:var(--bg);color:white;font-family:Arial,sans-serif}
+header{padding:20px 6%;display:flex;justify-content:space-between;align-items:center;background:#0b1220;border-bottom:1px solid #193b50}
+.logo{font-size:23px;font-weight:900;color:var(--blue);letter-spacing:2px}
+header a{color:var(--blue);text-decoration:none}
+main{max-width:1150px;margin:auto;padding:35px 20px 100px}
+.hero{padding:40px 25px;border:1px solid #16475d;border-radius:18px;background:linear-gradient(120deg,#10243a,#21153a);animation:fade .8s}
+h1{font-size:clamp(32px,6vw,55px);margin:12px 0}
+h1 span{color:var(--blue)}
+p{color:#a9bacb;line-height:1.7}
+.tag{color:var(--blue);letter-spacing:3px;font-size:12px}
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin:28px 0}
+.filters button{padding:10px 17px;background:#101b2b;color:white;border:1px solid #28435a;border-radius:8px;cursor:pointer}
+.filters button.active,.filters button:hover{border-color:var(--blue);color:var(--blue)}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.card{background:#101827;border:1px solid #243b50;border-radius:14px;padding:22px;transition:.3s;animation:fade .7s}
+.card:hover{transform:translateY(-5px);border-color:var(--blue);box-shadow:0 0 25px #00d9ff22}
+.card h2{margin:12px 0}
+.meta{display:flex;gap:15px;flex-wrap:wrap;margin:17px 0;color:#a9bacb;font-size:13px}
+.status{color:#63ffb3;font-size:11px;background:#12372b;padding:6px 10px;border-radius:20px}
+.join{display:inline-block;background:var(--blue);color:#00131b;text-decoration:none;padding:11px 18px;border-radius:7px;font-weight:bold;margin-top:8px}
+.note{font-size:12px;margin-top:20px;color:#8396aa}
+@keyframes fade{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:650px){.grid{grid-template-columns:1fr}main{padding:22px 14px 80px}}
+</style>
+</head>
+<body>
+<header>
+ <div class="logo">NEXUSPLAY</div>
+ <a href="home.html">← Back to Home</a>
+</header>
+<main>
+<section class="hero">
+ <div class="tag">NEXUS COMPETITIVE ARENA</div>
+ <h1>ENTER THE <span>ARENA.</span></h1>
+ <p>Discover esports competitions, explore events and prepare your squad for the next challenge.</p>
+</section>
+
+<div class="filters">
+ <button class="active" onclick="filterEvents('all',this)">All Events</button>
+ <button onclick="filterEvents('upcoming',this)">Upcoming</button>
+ <button onclick="filterEvents('live',this)">Live</button>
+ <button onclick="filterEvents('completed',this)">Completed</button>
+</div>
+
+<section class="grid" id="events">
+ <article class="card" data-status="upcoming">
+  <span class="status">UPCOMING</span>
+  <h2>BGMI Championship</h2>
+  <p>Squad competition. Prepare your team and compete for the top position.</p>
+  <div class="meta"><span>🎮 BGMI</span><span>👥 Squad</span><span>📅 To be announced</span></div>
+  <a href="#" class="join" onclick="demo(event)">Registration coming soon</a>
+ </article>
+ <article class="card" data-status="upcoming">
+  <span class="status">UPCOMING</span>
+  <h2>Free Fire Showdown</h2>
+  <p>Bring your squad together and test your teamwork.</p>
+  <div class="meta"><span>🔥 Free Fire MAX</span><span>👥 Squad</span><span>📅 To be announced</span></div>
+  <a href="#" class="join" onclick="demo(event)">Registration coming soon</a>
+ </article>
+ <article class="card" data-status="live">
+  <span class="status">DEMO LIVE</span>
+  <h2>COD Mobile Arena</h2>
+  <p>Explore this sample competitive event card.</p>
+  <div class="meta"><span>⚔️ COD Mobile</span><span>👤 Solo</span><span>📅 Demo event</span></div>
+  <a href="#" class="join" onclick="demo(event)">View details</a>
+ </article>
+ <article class="card" data-status="completed">
+  <span class="status">DEMO COMPLETED</span>
+  <h2>Nexus Open Cup</h2>
+  <p>A sample completed tournament for the platform preview.</p>
+  <div class="meta"><span>🎮 Multi-game</span><span>🏆 Results demo</span></div>
+  <a href="#" class="join" onclick="demo(event)">View results</a>
+ </article>
+</section>
+<p class="note">Demo content only. Real registrations, brackets, results and live tournament data will be connected when the backend is built.</p>
+</main>
+<script>
+function filterEvents(status,button){
+ document.querySelectorAll('.filters button').forEach(b=>b.classList.remove('active'));
+ button.classList.add('active');
+ document.querySelectorAll('.card').forEach(card=>{
+  card.style.display=status==='all'||card.dataset.status===status?'block':'none';
+ });
+}
+function demo(e){
+ e.preventDefault();
+ alert('This is a demo tournament. Registration will be available after the platform backend is connected.');
+}
+</script>
+</body>
+</html>
