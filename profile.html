@@ -1,0 +1,123 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEXUSPLAY | Player Profile</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#070b14;color:white;font-family:Arial,sans-serif}
+header{padding:18px;background:#0d1424;border-bottom:1px solid #173c65}
+.logo{font-size:23px;font-weight:900;color:#36bfff}
+.logo span{color:#a45cff}
+main{max-width:950px;margin:auto;padding:20px}
+.panel{background:#101a2b;border:1px solid #203b5b;border-radius:15px;padding:20px;margin-bottom:16px}
+.hero{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.avatar{width:100px;height:100px;border-radius:50%;background:linear-gradient(135deg,#078ed2,#843fff);display:grid;place-items:center;font-size:40px;border:3px solid #36bfff}
+h2,h3{color:#36bfff}
+.muted{color:#91a4bb}
+button{background:#078ed2;color:white;border:0;padding:11px 16px;border-radius:8px;cursor:pointer;font-weight:bold}
+button:hover{background:#20baff}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.stat{background:#142238;border-radius:10px;padding:15px;text-align:center}
+.stat strong{display:block;font-size:23px;color:#36bfff;margin-bottom:5px}
+.games,.badges{display:flex;gap:10px;flex-wrap:wrap}
+.chip{background:#172b45;border:1px solid #294667;border-radius:20px;padding:9px 13px}
+.badge{background:#172b45;border:1px solid #36bfff;border-radius:12px;padding:14px;text-align:center;flex:1;min-width:100px}
+input,textarea{width:100%;padding:12px;background:#080f1c;color:white;border:1px solid #294667;border-radius:8px;margin:7px 0 13px}
+textarea{resize:vertical}
+#editBox{display:none}
+@media(max-width:600px){main{padding:12px}.stats{grid-template-columns:1fr 1fr}.panel{padding:15px}}
+</style>
+</head>
+<body>
+<header><div class="logo">NEXUS<span>PLAY</span></div></header>
+<main>
+<section class="panel">
+<div class="hero">
+<div class="avatar">🎮</div>
+<div style="flex:1">
+<h2 id="username">NovaX</h2>
+<p class="muted" id="bio">Competitive gamer | Ready to conquer.</p>
+<p class="muted">🇮🇳 India · Player ID: NX-001</p>
+</div>
+<button onclick="showEdit()">Edit Profile</button>
+</div>
+</section>
+
+<section class="panel" id="editBox">
+<h3>Edit your profile</h3>
+<label>Username</label>
+<input id="nameInput" maxlength="20" value="NovaX">
+<label>Bio</label>
+<textarea id="bioInput" maxlength="160" rows="3">Competitive gamer | Ready to conquer.</textarea>
+<button onclick="saveProfile()">Save changes</button>
+<button onclick="hideEdit()" style="background:#34445d">Cancel</button>
+</section>
+
+<section class="panel">
+<h3>Player Statistics</h3>
+<div class="stats">
+<div class="stat"><strong>24</strong><span class="muted">Matches</span></div>
+<div class="stat"><strong>12</strong><span class="muted">Wins</span></div>
+<div class="stat"><strong>8</strong><span class="muted">Tournaments</span></div>
+<div class="stat"><strong>5</strong><span class="muted">Achievements</span></div>
+<div class="stat"><strong>1200</strong><span class="muted">XP</span></div>
+<div class="stat"><strong>Gold</strong><span class="muted">Rank</span></div>
+</div>
+</section>
+
+<section class="panel">
+<h3>My Games</h3>
+<div class="games">
+<span class="chip">🎯 BGMI</span>
+<span class="chip">🔥 Free Fire MAX</span>
+<span class="chip">⚔️ COD Mobile</span>
+<span class="chip">🌍 Mobile Legends</span>
+</div>
+</section>
+
+<section class="panel">
+<h3>Achievements & Badges</h3>
+<div class="badges">
+<div class="badge">🏆<br><strong>Champion</strong></div>
+<div class="badge">⚡<br><strong>Quick Player</strong></div>
+<div class="badge">🎯<br><strong>Sharpshooter</strong></div>
+</div>
+</section>
+
+<section class="panel">
+<h3>Nexus Coins</h3>
+<h2>🪙 250 NC</h2>
+<p class="muted">Earn coins through quests and redeem cosmetic items.</p>
+<button onclick="location.href='rewards.html'">Visit Rewards</button>
+</section>
+
+<section class="panel">
+<h3>My Team</h3>
+<strong>NEXUS WARRIORS</strong>
+<p class="muted">Team information and member management.</p>
+<button onclick="location.href='teams.html'">View Teams</button>
+</section>
+</main>
+
+<script>
+function showEdit(){
+document.getElementById("editBox").style.display="block";
+}
+function hideEdit(){
+document.getElementById("editBox").style.display="none";
+}
+function saveProfile(){
+const name=document.getElementById("nameInput").value.trim();
+const bio=document.getElementById("bioInput").value.trim();
+if(!name){alert("Please enter a username.");return;}
+document.getElementById("username").textContent=name;
+document.getElementById("bio").textContent=bio;
+hideEdit();
+alert("Profile updated in this demo!");
+}
+</script>
+</body>
+</html>
