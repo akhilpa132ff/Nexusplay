@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NEXUSPLAY | Scrims</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#070b14;color:white;font-family:Arial,sans-serif}
+header{padding:20px 6%;display:flex;justify-content:space-between;background:#0b1220;border-bottom:1px solid #193b50}
+.logo{color:#00d9ff;font-size:23px;font-weight:900;letter-spacing:2px}
+a{color:#00d9ff;text-decoration:none}
+main{max-width:1100px;margin:auto;padding:35px 20px 90px}
+.hero{padding:40px 25px;border:1px solid #17465d;border-radius:18px;background:linear-gradient(120deg,#10243a,#21153a)}
+.tag{color:#00d9ff;letter-spacing:3px;font-size:12px}
+h1{font-size:clamp(32px,6vw,52px);margin:15px 0}
+h1 span{color:#00d9ff}
+p{color:#a9bacb;line-height:1.7}
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin:25px 0}
+input,select{background:#101827;color:white;border:1px solid #28435a;border-radius:8px;padding:12px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:17px}
+.card{background:#101827;border:1px solid #243b50;border-radius:13px;padding:22px;transition:.3s}
+.card:hover{transform:translateY(-5px);border-color:#00d9ff;box-shadow:0 0 22px #00d9ff22}
+.card h2{margin:12px 0}
+.meta{font-size:13px;color:#a9bacb;margin:14px 0}
+button{cursor:pointer;background:#00d9ff;color:#00131b;border:0;padding:11px 16px;border-radius:7px;font-weight:bold}
+.status{font-size:11px;color:#63ffb3;background:#12372b;padding:6px 10px;border-radius:20px}
+@media(max-width:650px){.grid{grid-template-columns:1fr}main{padding:22px 14px}}
+</style>
+</head>
+<body>
+<header><div class="logo">NEXUSPLAY</div><a href="home.html">← Home</a></header>
+<main>
+<section class="hero">
+<div class="tag">PRACTICE. IMPROVE. COMPETE.</div>
+<h1>FIND YOUR <span>SCRIM.</span></h1>
+<p>Discover practice matches, prepare your squad and sharpen your teamwork.</p>
+</section>
+<div class="filters">
+<input id="search" placeholder="Search scrims..." oninput="filterScrims()">
+<select id="game" onchange="filterScrims()">
+<option value="all">All games</option>
+<option>BGMI</option><option>Free Fire MAX</option><option>COD Mobile</option>
+</select>
+</div>
+<section class="grid" id="scrims">
+<article class="card" data-game="BGMI">
+<span class="status">SAMPLE LISTING</span>
+<h2>BGMI Squad Practice</h2>
+<p>Practice session for squads looking to improve teamwork.</p>
+<div class="meta">🎮 BGMI · 👥 Squad · 📅 To be announced</div>
+<button onclick="details('BGMI Squad Practice')">View Details</button>
+</article>
+<article class="card" data-game="Free Fire MAX">
+<span class="status">SAMPLE LISTING</span>
+<h2>Free Fire Team Scrim</h2>
+<p>Practice with other teams in a friendly environment.</p>
+<div class="meta">🔥 Free Fire MAX · 👥 Squad · 📅 To be announced</div>
+<button onclick="details('Free Fire Team Scrim')">View Details</button>
+</article>
+<article class="card" data-game="COD Mobile">
+<span class="status">SAMPLE LISTING</span>
+<h2>COD Mobile Practice</h2>
+<p>Find practice partners and improve coordination.</p>
+<div class="meta">⚔️ COD Mobile · 👥 Team · 📅 To be announced</div>
+<button onclick="details('COD Mobile Practice')">View Details</button>
+</article>
+</section>
+<p style="font-size:12px;margin-top:25px">Sample listings only. Real scrim scheduling, team matching and participation will be added with the backend.</p>
+</main>
+<script>
+function filterScrims(){
+let q=document.getElementById('search').value.toLowerCase();
+let game=document.getElementById('game').value;
+document.querySelectorAll('.card').forEach(c=>{
+c.style.display=c.innerText.toLowerCase().includes(q)&&(game==='all'||c.dataset.game===game)?'block':'none';
+});
+}
+function details(name){alert(name+' is a sample listing. Scrim registration will be available after backend setup.');}
+</script>
+</body>
+</html>
