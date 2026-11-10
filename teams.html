@@ -1,0 +1,68 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NEXUSPLAY | Teams</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#070b14;color:white;font-family:Arial,sans-serif}
+header{padding:20px 6%;display:flex;justify-content:space-between;background:#0b1220;border-bottom:1px solid #193b50}
+.logo{color:#00d9ff;font-size:23px;font-weight:900;letter-spacing:2px}
+a{color:#00d9ff;text-decoration:none}
+main{max-width:1100px;margin:auto;padding:35px 20px 90px}
+.hero{padding:40px 25px;border:1px solid #17465d;border-radius:18px;background:linear-gradient(120deg,#10243a,#21153a);animation:fade .8s}
+.tag{color:#00d9ff;letter-spacing:3px;font-size:12px}
+h1{font-size:clamp(32px,6vw,52px);margin:15px 0}
+h1 span{color:#00d9ff}
+p{color:#a9bacb;line-height:1.7}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin:22px 0}
+button{cursor:pointer;border:1px solid #00d9ff;background:#00d9ff;color:#00131b;padding:12px 18px;border-radius:8px;font-weight:bold}
+input,select{background:#101827;color:white;border:1px solid #28435a;border-radius:8px;padding:12px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:17px;margin-top:22px}
+.card{background:#101827;border:1px solid #243b50;border-radius:13px;padding:21px;transition:.3s;animation:fade .7s}
+.card:hover{transform:translateY(-5px);border-color:#00d9ff;box-shadow:0 0 22px #00d9ff22}
+.card h2{margin:12px 0}
+.meta{font-size:13px;color:#a9bacb;margin:14px 0}
+.join{display:inline-block;padding:10px 15px;border-radius:7px;background:#00d9ff;color:#00131b;font-weight:bold}
+@keyframes fade{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:750px){.grid{grid-template-columns:1fr}main{padding:22px 14px}}
+</style>
+</head>
+<body>
+<header><div class="logo">NEXUSPLAY</div><a href="home.html">← Home</a></header>
+<main>
+<section class="hero">
+<div class="tag">BUILD YOUR LEGACY</div>
+<h1>FIND YOUR <span>TEAM.</span></h1>
+<p>Create a squad, discover talented players and build your esports team.</p>
+</section>
+<div class="actions">
+<input id="search" placeholder="Search teams..." oninput="searchTeams()">
+<button onclick="createTeam()">＋ Create Team</button>
+</div>
+<section class="grid" id="teams">
+<article class="card"><div style="font-size:30px">🛡️</div><h2>Neon Titans</h2><p>A competitive gaming team looking for new teammates.</p><div class="meta">🎮 BGMI · 4 members · Sample team</div><a href="#" class="join" onclick="apply(event,'Neon Titans')">View Team</a></article>
+<article class="card"><div style="font-size:30px">⚡</div><h2>Shadow Force</h2><p>A team focused on practice and teamwork.</p><div class="meta">🔥 Free Fire MAX · 5 members · Sample team</div><a href="#" class="join" onclick="apply(event,'Shadow Force')">View Team</a></article>
+<article class="card"><div style="font-size:30px">🚀</div><h2>Cyber Wolves</h2><p>Players who enjoy competitive COD Mobile.</p><div class="meta">⚔️ COD Mobile · 3 members · Sample team</div><a href="#" class="join" onclick="apply(event,'Cyber Wolves')">View Team</a></article>
+</section>
+<p style="font-size:12px;margin-top:25px">Sample teams only. Real team creation, applications, invitations and roster management will be connected through the backend.</p>
+</main>
+<script>
+function searchTeams(){
+ let q=document.getElementById('search').value.toLowerCase();
+ document.querySelectorAll('.card').forEach(c=>{
+ c.style.display=c.innerText.toLowerCase().includes(q)?'block':'none';
+ });
+}
+function createTeam(){
+ alert('Team creation will be available after account and database setup.');
+}
+function apply(e,name){
+ e.preventDefault();
+ alert(name+' is a sample team. Team applications will be enabled after backend setup.');
+}
+</script>
+</body>
+</html>
