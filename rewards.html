@@ -1,0 +1,98 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NEXUSPLAY | Rewards</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#070b14;color:white;font-family:Arial,sans-serif}
+header{padding:20px 6%;display:flex;justify-content:space-between;background:#0b1220;border-bottom:1px solid #193b50}
+.logo{color:#00d9ff;font-size:23px;font-weight:900;letter-spacing:2px}
+a{color:#00d9ff;text-decoration:none}
+main{max-width:1050px;margin:auto;padding:35px 20px 90px}
+.hero{padding:40px 25px;border:1px solid #17465d;border-radius:18px;background:linear-gradient(120deg,#10243a,#21153a)}
+.tag{color:#00d9ff;letter-spacing:3px;font-size:12px}
+h1{font-size:clamp(32px,6vw,52px);margin:15px 0}
+h1 span{color:#00d9ff}
+p{color:#a9bacb;line-height:1.7}
+.balance{margin-top:22px;padding:25px;background:#101827;border:1px solid #24506b;border-radius:14px}
+.balance strong{font-size:38px;color:#00d9ff;display:block;margin:10px 0}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:17px;margin-top:25px}
+.card{background:#101827;border:1px solid #243b50;border-radius:13px;padding:22px;transition:.3s}
+.card:hover{transform:translateY(-5px);border-color:#00d9ff}
+.icon{font-size:32px}
+h2{margin:12px 0}
+.meta{color:#00d9ff;font-size:13px;margin:12px 0}
+button{cursor:pointer;background:#00d9ff;color:#00131b;border:0;padding:11px 16px;border-radius:7px;font-weight:bold;margin-top:8px}
+.history{margin-top:30px;background:#101827;border:1px solid #243b50;border-radius:13px;padding:22px}
+.history li{color:#a9bacb;padding:12px 0;border-bottom:1px solid #26394b;list-style:none}
+.note{font-size:12px;margin-top:20px}
+@media(max-width:700px){.grid{grid-template-columns:1fr}main{padding:22px 14px}}
+</style>
+</head>
+<body>
+<header><div class="logo">NEXUSPLAY</div><a href="home.html">← Home</a></header>
+<main>
+<section class="hero">
+<div class="tag">PLAY · PARTICIPATE · EARN</div>
+<h1>NEXUS <span>REWARDS.</span></h1>
+<p>Complete activities, collect Nexus Coins and explore cosmetic rewards.</p>
+</section>
+
+<section class="balance">
+<p>YOUR DEMO BALANCE</p>
+<strong>🪙 <span id="coins">100</span></strong>
+<p>Sample coins for this page preview. Not a real account balance.</p>
+</section>
+
+<h2 style="margin-top:30px">Daily Activities</h2>
+<section class="grid">
+<article class="card"><div class="icon">📅</div><h2>Daily Visit</h2><p>Try today's demo activity.</p><div class="meta">+10 Nexus Coins</div><button onclick="claim('daily',10)">Claim Demo Reward</button></article>
+<article class="card"><div class="icon">🎮</div><h2>Explore a Game</h2><p>Explore the games section.</p><div class="meta">+15 Nexus Coins</div><button onclick="claim('game',15)">Claim Demo Reward</button></article>
+<article class="card"><div class="icon">🏆</div><h2>Explore Events</h2><p>Visit the tournament section.</p><div class="meta">+20 Nexus Coins</div><button onclick="claim('event',20)">Claim Demo Reward</button></article>
+</section>
+
+<h2 style="margin-top:32px">Cosmetic Rewards</h2>
+<section class="grid">
+<article class="card"><div class="icon">✨</div><h2>Neon Profile Frame</h2><p>A glowing profile decoration.</p><div class="meta">100 Coins · Demo item</div><button onclick="redeem('Neon Profile Frame',100)">Redeem Demo</button></article>
+<article class="card"><div class="icon">🎨</div><h2>Blue Theme</h2><p>A special blue profile theme.</p><div class="meta">150 Coins · Demo item</div><button onclick="redeem('Blue Theme',150)">Redeem Demo</button></article>
+<article class="card"><div class="icon">⚡</div><h2>Electric Badge</h2><p>A cosmetic profile badge.</p><div class="meta">200 Coins · Demo item</div><button onclick="redeem('Electric Badge',200)">Redeem Demo</button></article>
+</section>
+
+<section class="history">
+<h2>Reward History</h2>
+<ul id="history"><li>Welcome bonus · +100 demo coins</li></ul>
+</section>
+<p class="note">This is a local demo only. Coins and redemptions are not saved to an account and have no monetary value. Real rewards will require a secure backend.</p>
+</main>
+<script>
+let coins=100;
+let claimed=[];
+function update(){
+document.getElementById('coins').textContent=coins;
+}
+function addHistory(message){
+let li=document.createElement('li');
+li.textContent=message;
+document.getElementById('history').prepend(li);
+}
+function claim(id,amount){
+if(claimed.includes(id)){alert('You already claimed this demo activity.');return;}
+claimed.push(id);
+coins+=amount;
+update();
+addHistory('Demo activity reward · +'+amount+' coins');
+alert('Demo reward added!');
+}
+function redeem(name,cost){
+if(coins<cost){alert('Not enough demo coins.');return;}
+coins-=cost;
+update();
+addHistory('Demo redemption: '+name+' · -'+cost+' coins');
+alert(name+' redeemed in this temporary demo.');
+}
+</script>
+</body>
+</html>
