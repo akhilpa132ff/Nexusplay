@@ -1,0 +1,96 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NEXUSPLAY | Community</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#070b14;color:white;font-family:Arial,sans-serif}
+header{padding:20px 6%;display:flex;justify-content:space-between;background:#0b1220;border-bottom:1px solid #193b50}
+.logo{color:#00d9ff;font-size:23px;font-weight:900;letter-spacing:2px}
+a{color:#00d9ff;text-decoration:none}
+main{max-width:950px;margin:auto;padding:35px 20px 90px}
+.hero{padding:38px 25px;border:1px solid #17465d;border-radius:18px;background:linear-gradient(120deg,#10243a,#21153a);animation:fade .8s}
+.tag{color:#00d9ff;letter-spacing:3px;font-size:12px}
+h1{font-size:clamp(32px,6vw,50px);margin:15px 0}
+h1 span{color:#00d9ff}
+p{color:#a9bacb;line-height:1.7}
+.postbox,.post{background:#101827;border:1px solid #243b50;border-radius:13px;padding:20px;margin-top:20px}
+textarea{width:100%;min-height:90px;background:#080f1c;color:white;border:1px solid #28435a;border-radius:8px;padding:13px;resize:vertical}
+button{cursor:pointer;background:#00d9ff;color:#00131b;border:0;padding:11px 17px;border-radius:7px;font-weight:bold;margin-top:12px}
+.post h3{margin:12px 0}
+.author{color:#00d9ff;font-size:13px}
+.post p{margin:12px 0}
+.actions{display:flex;gap:12px;align-items:center}
+.actions button{background:#162b40;color:#00d9ff;border:1px solid #24506b}
+@keyframes fade{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:650px){main{padding:22px 14px}}
+</style>
+</head>
+<body>
+<header><div class="logo">NEXUSPLAY</div><a href="home.html">← Home</a></header>
+<main>
+<section class="hero">
+<div class="tag">THE ESPORTS COMMUNITY</div>
+<h1>SHARE YOUR <span>GAME.</span></h1>
+<p>Discuss games, share achievements and connect with the NEXUSPLAY community.</p>
+</section>
+
+<section class="postbox">
+<h3>📝 Create a post</h3>
+<textarea id="postText" maxlength="500" placeholder="What's happening in your gaming world?"></textarea>
+<button onclick="publishPost()">Publish Post</button>
+</section>
+
+<section id="feed">
+<article class="post">
+<div class="author">NEXUSPLAYER · Sample post</div>
+<h3>Welcome to NEXUSPLAY! 🚀</h3>
+<p>This is a sample community post. Share your gaming interests and meet other players.</p>
+<div class="actions"><button onclick="likePost(this)">♡ Like <span>0</span></button><button onclick="commentPost()">Comment</button></div>
+</article>
+<article class="post">
+<div class="author">ESPORTS FAN · Sample post</div>
+<h3>Which game are you playing today?</h3>
+<p>BGMI, Free Fire MAX, COD Mobile or Mobile Legends? Tell the community!</p>
+<div class="actions"><button onclick="likePost(this)">♡ Like <span>0</span></button><button onclick="commentPost()">Comment</button></div>
+</article>
+</section>
+<p style="font-size:12px;margin-top:22px">Demo feed only. Posts created here are temporary and stay in this browser page. Real community posts, comments and reactions require a backend.</p>
+</main>
+<script>
+function publishPost(){
+ let box=document.getElementById('postText');
+ let value=box.value.trim();
+ if(!value){alert('Write something first.');return;}
+ let post=document.createElement('article');
+ post.className='post';
+ let author=document.createElement('div');
+ author.className='author';
+ author.textContent='YOU · Local demo post';
+ let heading=document.createElement('h3');
+ heading.textContent='Community Update';
+ let content=document.createElement('p');
+ content.textContent=value;
+ let actions=document.createElement('div');
+ actions.className='actions';
+ let like=document.createElement('button');
+ like.innerHTML='♡ Like <span>0</span>';
+ like.onclick=function(){likePost(like)};
+ actions.appendChild(like);
+ post.append(author,heading,content,actions);
+ document.getElementById('feed').prepend(post);
+ box.value='';
+}
+function likePost(button){
+ let count=button.querySelector('span');
+ count.textContent=Number(count.textContent)+1;
+}
+function commentPost(){
+ alert('Comments will be available when the community backend is connected.');
+}
+</script>
+</body>
+</html>
