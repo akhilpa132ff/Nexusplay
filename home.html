@@ -1,0 +1,127 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEXUSPLAY | Home</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--blue:#00d9ff;--purple:#8b5cf6;--bg:#070b14;--card:#101827}
+body{background:var(--bg);color:white;font-family:Arial,sans-serif;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;z-index:-1;background:radial-gradient(circle at 20% 20%,#06334a55,transparent 35%),radial-gradient(circle at 80% 70%,#40207844,transparent 35%)}
+header{height:72px;padding:0 6%;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #1c3447;background:#080d18dd;position:sticky;top:0;z-index:10;backdrop-filter:blur(12px)}
+.logo{font-size:23px;font-weight:900;letter-spacing:2px;color:var(--blue);text-shadow:0 0 15px var(--blue)}
+.logo span{color:white}
+.menu{display:flex;gap:25px}
+.menu a{color:#b9c9d9;text-decoration:none;font-size:14px;transition:.3s}
+.menu a:hover{color:var(--blue)}
+.login{border:1px solid var(--blue);padding:10px 18px;border-radius:8px;color:var(--blue);text-decoration:none}
+main{max-width:1200px;margin:auto;padding:35px 22px}
+.hero{min-height:390px;border:1px solid #17445a;border-radius:20px;padding:55px 6%;display:flex;align-items:center;position:relative;overflow:hidden;background:linear-gradient(110deg,#0d1c2d,#10152b 65%,#21133b)}
+.hero:after{content:"";position:absolute;width:350px;height:350px;border:1px solid #00d9ff55;border-radius:50%;right:8%;top:20px;box-shadow:0 0 50px #00d9ff22,inset 0 0 50px #00d9ff22;animation:pulse 4s infinite}
+@keyframes pulse{50%{transform:scale(1.12);opacity:.45}}
+.hero-content{position:relative;z-index:1;max-width:600px}
+.tag{color:var(--blue);letter-spacing:4px;font-size:12px;font-weight:bold}
+h1{font-size:clamp(38px,7vw,68px);line-height:1.05;margin:20px 0}
+h1 span{color:var(--blue);text-shadow:0 0 20px #00d9ff66}
+.hero p{color:#b6c6d5;line-height:1.7;max-width:470px}
+.btn{display:inline-block;margin-top:25px;padding:14px 23px;border-radius:8px;background:var(--blue);color:#00131b;text-decoration:none;font-weight:bold;box-shadow:0 0 20px #00d9ff55;transition:.3s}
+.btn:hover{transform:translateY(-4px);box-shadow:0 0 30px #00d9ff99}
+.section{margin-top:42px}
+.section-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+h2{font-size:22px}
+.section-head a{color:var(--blue);font-size:13px;text-decoration:none}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:17px}
+.card{background:linear-gradient(145deg,#121e30,#0c1320);border:1px solid #20354b;border-radius:13px;padding:22px;transition:.3s;animation:appear .7s both}
+.card:hover{transform:translateY(-6px);border-color:var(--blue);box-shadow:0 8px 30px #00d9ff18}
+@keyframes appear{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.icon{font-size:28px;margin-bottom:15px}
+.card h3{margin-bottom:9px}
+.card p{font-size:13px;color:#9eafc0;line-height:1.6}
+.status{display:inline-block;font-size:10px;color:#5dffb0;background:#10392b;padding:6px 9px;border-radius:20px;margin-bottom:12px}
+.games{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}
+.game{height:125px;border:1px solid #263a50;border-radius:12px;background:linear-gradient(135deg,#14243a,#15152d);display:flex;align-items:center;justify-content:center;text-align:center;font-weight:bold;transition:.3s}
+.game:hover{border-color:var(--purple);box-shadow:0 0 20px #8b5cf633;transform:scale(1.03)}
+footer{text-align:center;padding:35px;color:#718397;border-top:1px solid #1b2a3b;margin-top:55px;font-size:12px}
+.bottom{display:none}
+@media(max-width:750px){
+ header{padding:0 18px;height:62px}
+ .menu{display:none}
+ .hero{padding:38px 25px;min-height:360px}
+ .hero:after{right:-170px;top:70px}
+ .grid{grid-template-columns:1fr}
+ .games{grid-template-columns:repeat(2,1fr)}
+ main{padding:22px 15px 90px}
+ .bottom{display:flex;position:fixed;bottom:0;left:0;width:100%;background:#090f1cF2;border-top:1px solid #17445a;justify-content:space-around;padding:13px 4px;z-index:20}
+ .bottom a{color:#a9bbce;text-decoration:none;font-size:11px;text-align:center}
+ .bottom a:hover{color:var(--blue)}
+}
+</style>
+</head>
+<body>
+<header>
+ <div class="logo">NEXUS<span>PLAY</span></div>
+ <nav class="menu">
+  <a href="home.html">Home</a>
+  <a href="tournaments.html">Tournaments</a>
+  <a href="groups.html">Groups</a>
+  <a href="teams.html">Teams</a>
+  <a href="players.html">Players</a>
+ </nav>
+ <a class="login" href="profile.html">My Profile</a>
+</header>
+
+<main>
+ <section class="hero">
+  <div class="hero-content">
+   <div class="tag">THE NEXT LEVEL OF ESPORTS</div>
+   <h1>PLAY. COMPETE.<br><span>DOMINATE.</span></h1>
+   <p>Your gaming community starts here. Discover tournaments, build your dream team, find players and rise through the esports world.</p>
+   <a href="tournaments.html" class="btn">Explore Tournaments →</a>
+  </div>
+ </section>
+
+ <section class="section">
+  <div class="section-head"><h2>⚡ Your Nexus Dashboard</h2></div>
+  <div class="grid">
+   <a href="tournaments.html" style="text-decoration:none;color:white"><div class="card"><div class="icon">🏆</div><h3>Tournaments</h3><p>Discover competitions and explore upcoming esports events.</p></div></a>
+   <a href="groups.html" style="text-decoration:none;color:white"><div class="card"><div class="icon">👥</div><h3>Groups</h3><p>Join gaming communities, meet players and connect.</p></div></a>
+   <a href="teams.html" style="text-decoration:none;color:white"><div class="card"><div class="icon">🛡️</div><h3>Teams</h3><p>Create your squad and find your next teammates.</p></div></a>
+   <a href="players.html" style="text-decoration:none;color:white"><div class="card"><div class="icon">🎮</div><h3>Player Discovery</h3><p>Explore players and discover gaming profiles.</p></div></a>
+   <a href="rewards.html" style="text-decoration:none;color:white"><div class="card"><div class="icon">🪙</div><h3>Nexus Rewards</h3><p>Explore activities, achievements and cosmetic rewards.</p></div></a>
+   <a href="premium-ai.html" style="text-decoration:none;color:white"><div class="card"><div class="icon">✦</div><h3>Nexus AI Premium</h3><p>Explore premium AI coaching and advanced insights.</p></div></a>
+  </div>
+ </section>
+
+ <section class="section">
+  <div class="section-head"><h2>🔥 Featured Games</h2><a href="games.html">View all →</a></div>
+  <div class="games">
+   <div class="game">🎯<br>BGMI</div>
+   <div class="game">🔥<br>Free Fire MAX</div>
+   <div class="game">⚔️<br>COD Mobile</div>
+   <div class="game">🌟<br>Mobile Legends</div>
+  </div>
+ </section>
+
+ <section class="section">
+  <div class="section-head"><h2>🚀 Community</h2></div>
+  <div class="grid">
+   <a href="community.html" style="text-decoration:none;color:white"><div class="card"><div class="icon">💬</div><h3>Community Feed</h3><p>Explore gaming discussions, posts and updates.</p></div></a>
+   <a href="scrims.html" style="text-decoration:none;color:white"><div class="card"><div class="icon">🎯</div><h3>Scrims</h3><p>Find practice matches and competitive sessions.</p></div></a>
+   <a href="messages.html" style="text-decoration:none;color:white"><div class="card"><div class="icon">✉️</div><h3>Messages</h3><p>Connect with your gaming community.</p></div></a>
+  </div>
+ </section>
+</main>
+
+<nav class="bottom">
+ <a href="home.html">⌂<br>Home</a>
+ <a href="tournaments.html">🏆<br>Events</a>
+ <a href="groups.html">👥<br>Groups</a>
+ <a href="teams.html">🛡️<br>Teams</a>
+ <a href="profile.html">👤<br>Profile</a>
+</nav>
+
+<footer>© 2026 NEXUSPLAY. Built for the next generation of esports.</footer>
+</body>
+</html>
