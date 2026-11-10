@@ -1,0 +1,140 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEXUSPLAY | Settings</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#070b14;color:white;font-family:Arial,sans-serif}
+header{padding:18px;background:#0d1424;border-bottom:1px solid #173c65}
+.logo{font-size:23px;font-weight:900;color:#36bfff}
+.logo span{color:#a45cff}
+main{max-width:800px;margin:auto;padding:20px}
+h2,h3{color:#36bfff}
+.panel{background:#101a2b;border:1px solid #203b5b;border-radius:14px;padding:18px;margin-bottom:15px}
+.setting{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 0;border-bottom:1px solid #20334d}
+.setting:last-child{border:0}
+.setting p{color:#91a4bb;font-size:13px;margin:5px 0}
+button{background:#078ed2;color:white;border:0;padding:10px 15px;border-radius:8px;cursor:pointer;font-weight:bold}
+button:hover{background:#20baff}
+select,input{background:#080f1c;color:white;border:1px solid #294667;border-radius:7px;padding:9px;max-width:150px}
+.danger{background:#a52c45}
+.toggle{width:43px;height:23px;accent-color:#078ed2;cursor:pointer}
+.muted{color:#91a4bb;font-size:13px}
+@media(max-width:550px){main{padding:12px}.panel{padding:13px}.setting{align-items:flex-start}}
+</style>
+</head>
+<body>
+<header><div class="logo">NEXUS<span>PLAY</span></div></header>
+<main>
+<h2>Settings</h2>
+<p class="muted">Manage your NEXUSPLAY experience.</p>
+
+<section class="panel">
+<h3>Account</h3>
+<div class="setting">
+<div><strong>Username</strong><p>Change your display name.</p></div>
+<button onclick="changeUsername()">Change</button>
+</div>
+<div class="setting">
+<div><strong>Language</strong><p>Choose your preferred language.</p></div>
+<select id="language">
+<option>English</option><option>Hindi</option>
+</select>
+</div>
+</section>
+
+<section class="panel">
+<h3>Notifications</h3>
+<div class="setting">
+<div><strong>Tournament alerts</strong><p>Receive tournament updates.</p></div>
+<input class="toggle" type="checkbox" checked>
+</div>
+<div class="setting">
+<div><strong>Team invitations</strong><p>Receive team invitation alerts.</p></div>
+<input class="toggle" type="checkbox" checked>
+</div>
+<div class="setting">
+<div><strong>Quest rewards</strong><p>Get notified about new quests.</p></div>
+<input class="toggle" type="checkbox" checked>
+</div>
+</section>
+
+<section class="panel">
+<h3>Privacy & Safety</h3>
+<div class="setting">
+<div><strong>Show online status</strong><p>Let other players see when you are online.</p></div>
+<input class="toggle" type="checkbox" checked>
+</div>
+<div class="setting">
+<div><strong>Profile visibility</strong><p>Choose who can view your profile.</p></div>
+<select id="visibility">
+<option>Everyone</option>
+<option>Friends only</option>
+<option>Private</option>
+</select>
+</div>
+<div class="setting">
+<div><strong>Blocked players</strong><p>Manage players you have blocked.</p></div>
+<button onclick="alert('Block management will be connected later.')">Manage</button>
+</div>
+</section>
+
+<section class="panel">
+<h3>Appearance</h3>
+<div class="setting">
+<div><strong>Theme</strong><p>Choose your interface theme.</p></div>
+<select id="theme">
+<option>Neon Dark</option>
+<option>Dark Blue</option>
+<option>Purple Neon</option>
+</select>
+</div>
+<div class="setting">
+<div><strong>Animations</strong><p>Enable interface animations.</p></div>
+<input class="toggle" type="checkbox" checked>
+</div>
+</section>
+
+<section class="panel">
+<h3>About</h3>
+<p class="muted">NEXUSPLAY Version 1.0.0</p>
+<p class="muted">Connect. Compete. Conquer.</p>
+<button onclick="alert('NEXUSPLAY help centre coming soon.')">Help & Support</button>
+</section>
+
+<section class="panel">
+<h3>Account Actions</h3>
+<button class="danger" onclick="alert('Account logout will be connected after authentication is implemented.')">Log Out</button>
+</section>
+
+<button onclick="saveSettings()">Save Settings</button>
+<p id="status" class="muted"></p>
+</main>
+
+<script>
+function changeUsername(){
+const name=prompt("Enter your new username:");
+if(name && name.trim()){
+alert("Username change requested: "+name.trim());
+}
+}
+function saveSettings(){
+const settings={
+language:document.getElementById("language").value,
+visibility:document.getElementById("visibility").value,
+theme:document.getElementById("theme").value,
+toggles:[...document.querySelectorAll(".toggle")].map(x=>x.checked)
+};
+try{
+localStorage.setItem("nexusplaySettings",JSON.stringify(settings));
+document.getElementById("status").textContent="Settings saved on this device!";
+}catch(e){
+document.getElementById("status").textContent="Could not save settings.";
+}
+}
+</script>
+</body>
+</html>
