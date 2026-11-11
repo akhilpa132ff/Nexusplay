@@ -1,0 +1,315 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEXUSPLAY | Game Maps</title>
+<style>
+:root {
+  --bg:#070b14;
+  --panel:#101a2b;
+  --blue:#00d9ff;
+  --purple:#925cff;
+  --white:#f4f8ff;
+  --muted:#9aabc2;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:var(--bg);
+  color:var(--white);
+  font-family:Arial,sans-serif;
+  min-height:100vh;
+}
+header{
+  padding:20px 5%;
+  border-bottom:1px solid #1c3049;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:12px;
+}
+.logo{font-size:23px;font-weight:900;color:var(--blue)}
+.logo span{color:white}
+header a{color:var(--muted);text-decoration:none}
+.container{width:92%;max-width:1100px;margin:28px auto}
+h1{font-size:30px;margin-bottom:8px}
+.subtitle{color:var(--muted);margin-bottom:24px;line-height:1.5}
+h2{font-size:20px;margin-bottom:15px}
+.panel{
+  background:var(--panel);
+  border:1px solid #203652;
+  border-radius:15px;
+  padding:20px;
+  margin-bottom:22px;
+}
+.games{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+}
+.game{
+  background:#0a1423;
+  color:white;
+  border:1px solid #29405b;
+  border-radius:10px;
+  padding:15px 8px;
+  cursor:pointer;
+  font-weight:bold;
+}
+.game.active,.game:hover{
+  border-color:var(--blue);
+  color:var(--blue);
+  box-shadow:0 0 12px #00d9ff30;
+}
+select,input,textarea{
+  width:100%;
+  padding:12px;
+  border-radius:8px;
+  border:1px solid #29405b;
+  background:#091322;
+  color:white;
+  margin:8px 0 14px;
+}
+.map{
+  position:relative;
+  min-height:350px;
+  overflow:hidden;
+  border-radius:12px;
+  border:1px solid #31516d;
+  background-color:#142b38;
+  background-image:
+    linear-gradient(#4b849044 1px,transparent 1px),
+    linear-gradient(90deg,#4b849044 1px,transparent 1px),
+    radial-gradient(ellipse at 30% 40%,#245d4d 0 15%,transparent 16%),
+    radial-gradient(ellipse at 70% 65%,#315b42 0 20%,transparent 21%);
+  background-size:35px 35px,35px 35px,100% 100%,100% 100%;
+  cursor:crosshair;
+}
+.map:after{
+  content:"ILLUSTRATIVE MAP • NOT AN OFFICIAL GAME MAP";
+  position:absolute;
+  bottom:10px;left:10px;
+  font-size:10px;color:#d7e7e7;
+  background:#07121ccc;padding:7px;border-radius:5px;
+  pointer-events:none;
+}
+.map-title{
+  position:absolute;top:12px;left:12px;
+  background:#07121ccc;padding:8px 12px;
+  border-radius:7px;font-size:13px;
+}
+.marker{
+  position:absolute;
+  transform:translate(-50%,-50%);
+  background:var(--blue);
+  color:#00131a;
+  border:2px solid white;
+  border-radius:50%;
+  width:25px;height:25px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:bold;
+  z-index:2;
+}
+button.action{
+  background:var(--blue);
+  color:#00121b;
+  border:0;border-radius:8px;
+  padding:11px 16px;
+  font-weight:bold;cursor:pointer;
+}
+button.secondary{
+  background:#192b42;color:white;
+  border:1px solid #31516d;
+}
+.guides{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+}
+.guide{
+  background:#0a1423;
+  border:1px solid #263d58;
+  border-radius:10px;
+  padding:15px;
+}
+.guide p{color:var(--muted);font-size:14px;line-height:1.5;margin-top:8px}
+.tag{color:var(--blue);font-size:12px;font-weight:bold}
+#markers{color:var(--muted);font-size:13px;margin:12px 0}
+.note{color:var(--muted);font-size:12px;line-height:1.5}
+.ai{
+  border-color:#6246a8;
+  background:linear-gradient(135deg,#15152d,#101a2b);
+}
+footer{text-align:center;padding:25px;color:var(--muted);font-size:12px}
+@media(max-width:650px){
+  .games{grid-template-columns:repeat(2,1fr)}
+  .guides{grid-template-columns:1fr}
+  h1{font-size:25px}
+  .map{min-height:300px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">NEXUS<span>PLAY</span></div>
+  <a href="home.html">← Back to Home</a>
+</header>
+
+<main class="container">
+  <h1>GAME MAPS</h1>
+  <p class="subtitle">Explore maps, learn locations and plan your next match.</p>
+
+  <section class="panel">
+    <h2>Choose your game</h2>
+    <div class="games">
+      <button class="game active" onclick="chooseGame('BGMI',this)">BGMI</button>
+      <button class="game" onclick="chooseGame('Free Fire MAX',this)">Free Fire MAX</button>
+      <button class="game" onclick="chooseGame('COD Mobile',this)">COD Mobile</button>
+      <button class="game" onclick="chooseGame('Mobile Legends',this)">Mobile Legends</button>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2 id="mapHeading">BGMI Maps</h2>
+    <label for="mapSelect">Select a map</label>
+    <select id="mapSelect" onchange="changeMap()">
+      <option>Erangel</option>
+      <option>Miramar</option>
+      <option>Sanhok</option>
+      <option>Livik</option>
+    </select>
+
+    <p class="note">This is a simple schematic map area. Click anywhere to place your own marker.</p>
+    <div class="map" id="mapArea" onclick="addMarker(event)">
+      <div class="map-title" id="mapLabel">Erangel</div>
+    </div>
+
+    <div id="markers">Your markers: 0</div>
+    <button class="action" onclick="clearMarkers()">Clear markers</button>
+    <button class="action secondary" onclick="saveMarkers()">Save markers</button>
+  </section>
+
+  <section class="panel">
+    <h2>Map Guides</h2>
+    <div class="guides" id="guides">
+      <div class="guide">
+        <span class="tag">BEGINNER GUIDE</span>
+        <h3>Understanding locations</h3>
+        <p>Learn the map layout, identify important locations and plan where your team wants to explore.</p>
+      </div>
+      <div class="guide">
+        <span class="tag">TEAM GUIDE</span>
+        <h3>Team coordination</h3>
+        <p>Share location ideas with teammates, agree on a route and communicate clearly during matches.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel ai">
+    <h2>✦ NEXUS AI Map Assistant</h2>
+    <p class="subtitle">Ask a map-related question. AI connection is not enabled in this demo.</p>
+    <label for="question">Your question</label>
+    <textarea id="question" rows="3" placeholder="Example: Explain how to plan a team rotation..."></textarea>
+    <button class="action" onclick="askAI()">Ask Assistant</button>
+    <p id="aiReply" class="note" style="margin-top:14px"></p>
+    <p class="note">Free: limited AI usage. Premium: higher limits and advanced guidance. Actual AI requires a secure backend connection.</p>
+  </section>
+</main>
+
+<footer>© 2026 NEXUSPLAY • Play Together. Rise Together.</footer>
+
+<script>
+let currentGame = "BGMI";
+let markerCount = 0;
+
+const maps = {
+  "BGMI":["Erangel","Miramar","Sanhok","Livik"],
+  "Free Fire MAX":["Bermuda","Purgatory","Kalahari","Alpine"],
+  "COD Mobile":["Isolated","Blackout","Nuketown","Crash"],
+  "Mobile Legends":["Land of Dawn","Classic Map","Ranked Map"]
+};
+
+function chooseGame(game,button){
+  currentGame=game;
+  document.querySelectorAll(".game").forEach(b=>b.classList.remove("active"));
+  button.classList.add("active");
+
+  const select=document.getElementById("mapSelect");
+  select.innerHTML="";
+  maps[game].forEach(name=>{
+    const option=document.createElement("option");
+    option.textContent=name;
+    select.appendChild(option);
+  });
+
+  document.getElementById("mapHeading").textContent=game+" Maps";
+  changeMap();
+  clearMarkers();
+}
+
+function changeMap(){
+  document.getElementById("mapLabel").textContent=
+    document.getElementById("mapSelect").value;
+  clearMarkers();
+}
+
+function addMarker(event){
+  if(event.target.classList.contains("marker")) return;
+
+  const map=document.getElementById("mapArea");
+  const rect=map.getBoundingClientRect();
+  const x=((event.clientX-rect.left)/rect.width)*100;
+  const y=((event.clientY-rect.top)/rect.height)*100;
+
+  const marker=document.createElement("div");
+  marker.className="marker";
+  marker.textContent=++markerCount;
+  marker.style.left=x+"%";
+  marker.style.top=y+"%";
+  map.appendChild(marker);
+
+  updateMarkerCount();
+}
+
+function updateMarkerCount(){
+  document.getElementById("markers").textContent=
+    "Your markers: "+markerCount;
+}
+
+function clearMarkers(){
+  document.querySelectorAll(".marker").forEach(m=>m.remove());
+  markerCount=0;
+  updateMarkerCount();
+}
+
+function saveMarkers(){
+  const markers=[...document.querySelectorAll(".marker")].map(m=>({
+    x:m.style.left,y:m.style.top,label:m.textContent
+  }));
+
+  localStorage.setItem("nexusMapMarkers",JSON.stringify({
+    game:currentGame,
+    map:document.getElementById("mapSelect").value,
+    markers
+  }));
+  alert("Markers saved on this device!");
+}
+
+function askAI(){
+  const q=document.getElementById("question").value.trim();
+  const reply=document.getElementById("aiReply");
+
+  if(!q){
+    reply.textContent="Please enter a question first.";
+    return;
+  }
+
+  reply.textContent=
+    "The AI service is not connected yet. Your question is ready for a future secure NEXUS AI integration.";
+}
+</script>
+</body>
+</html>
