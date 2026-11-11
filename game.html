@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#060a12"><title>NEXUSPLAY — Game Hub</title><link rel="stylesheet" href="assets/css/app.css"></head>
+<body><header class="topbar"><a class="brand" href="index.html">NEXUS<span>PLAY</span></a><nav class="toplinks"><a href="index.html">Change game</a><a class="button secondary" href="account.html">My account</a></nav></header>
+<main class="wrap"><section class="hero"><div class="eyebrow">GAME HUB</div><h1 id="gameTitle">LOADING <span class="glow">GAME...</span></h1><p class="lead" id="gameDesc">Your selected game hub.</p><div class="row"><a class="button" href="auth.html">Create player account</a><a class="button secondary" href="index.html">Switch game</a></div></section>
+<section><div class="section-title"><h2>Explore this hub</h2><span class="muted">Feature status</span></div><div class="feature-grid">
+<article class="feature"><h3>🏆 Tournaments</h3><p>Event discovery, registration and verified results.</p><span class="status planned">Backend in progress</span></article>
+<article class="feature"><h3>👥 Groups</h3><p>Game communities, group discovery and member controls.</p><span class="status planned">Backend in progress</span></article>
+<article class="feature"><h3>🛡️ Teams</h3><p>Build a squad, invite players and manage team roles.</p><span class="status planned">Backend in progress</span></article>
+<article class="feature"><h3>🎮 Players</h3><p>Find players who have chosen to make their profiles discoverable.</p><span class="status planned">Privacy controls first</span></article>
+<article class="feature"><h3>🎯 Scrims</h3><p>Practice match listings and team scheduling.</p><span class="status planned">Backend in progress</span></article>
+<article class="feature"><h3>✦ NEXUS AI</h3><p>Free limited access to AI tools, with higher limits for Premium later.</p><span class="status planned">Not connected yet</span></article>
+</div></section><div class="notice">This hub is an honest development preview. The cards above are not live services yet. We will only mark a feature live after its database rules and real user flows are tested.</div></main>
+<nav class="mobile-nav"><a href="index.html"><span>◈</span>Games</a><a href="auth.html"><span>↪</span>Sign in</a><a href="account.html"><span>◎</span>Account</a></nav>
+<script type="module">
+import { supabase } from "./assets/js/supabase.js";
+const names={"bgmi":"BGMI","free-fire-max":"Free Fire MAX","cod-mobile":"Call of Duty: Mobile","mobile-legends":"Mobile Legends: Bang Bang"};
+const slug=new URLSearchParams(location.search).get("game")||"bgmi";
+const title=names[slug];
+const h=document.getElementById("gameTitle"),d=document.getElementById("gameDesc");
+if(!title){h.textContent="GAME NOT FOUND";d.textContent="Choose a supported game from the game selection screen."}
+else {h.textContent=title.toUpperCase();d.textContent="Your "+title+" hub — tournaments, teams, groups, players and scrims are being connected."}
+try{const {data,error}=await supabase.from("games").select("slug,name,genre").eq("slug",slug).maybeSingle();if(!error&&data){d.textContent=data.name+" · "+data.genre+" · Your game hub."}}catch(e){console.info("Game catalog unavailable; showing local catalog.") }
+</script></body></html>

@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#060a12">
+<title>NEXUSPLAY — Account access</title>
+<link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="index.html">NEXUS<span>PLAY</span></a>
+  <nav class="toplinks"><a href="index.html">Choose game</a></nav>
+</header>
+<main class="wrap">
+  <section class="card form-card">
+    <div class="eyebrow">PLAYER ACCOUNT</div>
+    <h1 style="font-size:30px;margin:10px 0">Welcome to <span class="glow">NEXUSPLAY</span></h1>
+    <p class="muted">Create an account or sign in with your email. NEXUSPLAY will never ask you to share your password with another player.</p>
+    <div class="row" style="margin:18px 0;gap:8px">
+      <button class="button" id="signupTab" type="button">Create account</button>
+      <button class="button secondary" id="loginTab" type="button">Sign in</button>
+    </div>
+    <form id="authForm" novalidate>
+      <div class="field" id="usernameField">
+        <label for="username">Player username</label>
+        <input id="username" autocomplete="username" minlength="3" maxlength="20" pattern="[A-Za-z0-9_]{3,20}" placeholder="Player_123">
+        <small class="muted">3–20 letters, numbers or underscores.</small>
+      </div>
+      <div class="field" id="emailField">
+        <label for="email">Email address</label>
+        <input id="email" type="email" autocomplete="email" required maxlength="254" placeholder="you@example.com">
+      </div>
+      <div class="field" id="passwordField">
+        <label for="password">Password</label>
+        <input id="password" type="password" autocomplete="new-password" minlength="8" maxlength="72" placeholder="At least 8 characters">
+      </div>
+      <div class="field" id="confirmField" hidden>
+        <label for="confirmPassword">Confirm new password</label>
+        <input id="confirmPassword" type="password" autocomplete="new-password" minlength="8" maxlength="72" placeholder="Enter the new password again">
+      </div>
+      <button class="button" id="submitBtn" type="submit" style="width:100%">Create account</button>
+    </form>
+    <div class="row" style="margin-top:12px">
+      <button class="button secondary" id="forgotBtn" type="button">Forgot password?</button>
+      <button class="button secondary" id="backBtn" type="button" hidden>Back to sign in</button>
+    </div>
+    <div id="message" aria-live="polite" role="status"></div>
+    <div class="notice">Keep your profile private unless you choose otherwise. Never put your phone number, home address, school, daily routine or private social accounts in your profile.</div>
+    <p class="muted" style="font-size:12px">Email confirmation may be required. Check your inbox and spam folder. Use an email account with permission from a parent or guardian if needed.</p>
+  </section>
+</main>
+<nav class="mobile-nav">
+  <a href="index.html"><span>◈</span>Games</a>
+  <a href="auth.html"><span>↪</span>Account</a>
+</nav>
+<script type="module">
+import { supabase } from "./assets/js/supabase.js";
+
+const form = document.getElementById("authForm");
+const message = document.getElementById("message");
+const submit = document.getElementById("submitBtn");
+const usernameField = document.getElementById("usernameField");
+const passwordField = document.getElementById("passwordField");
+const confirmField = document.getElementById("confirmField");
+const emailField = document.getElementById("emailField");
+const forgotBtn = document.getElementById("forgotBtn");
+const backBtn = document.getElementById("backBtn");
+let mode = "signup";
+let busy = false;
+
+function showMessage(text, type = "success") {
+  message.replaceChildren();
+  const box = document.createElement("div");
+  box.className = "notice " + type;
+  box.textContent = text;
+  message.append(box);
+}
+function clearMessage() { message.replaceChildren(); }
+function setMode(next) {
+  mode = next;
+  clearMessage();
+  usernameField.hidden = mode !== "signup";
+  emailField.hidden = mode === "recovery";
+  passwordField.hidden = mode === "forgot";
+  confirmField.hidden = mode !== "recovery";
+  document.getElementById("signupTab").hidden = mode === "forgot" || mode === "recovery";
+  document.getElementById("loginTab").hidden = mode === "forgot" || mode === "recovery";
+  forgotBtn.hidden = mode !== "login";
+  backBtn.hidden = mode !== "forgot" && mode !== "recovery";
+  submit.textContent = ({
+    signup: "Create account",
+    login: "Sign in",
+    forgot: "Send reset email",
+    recovery: "Save new password"
+  })[mode];
+  document.getElementById("password").autocomplete = mode === "login" ? "current-password" : "new-password";
+}
+function setBusy(value) {
+  busy = value;
+  submit.disabled = value;
+  submit.textContent = value ? "Please wait…" : ({
+    signup: "Create account",
+    login: "Sign in",
+    forgot: "Send reset email",
+    recovery: "Save new password"
+  })[mode];
+}
+
+document.getElementById("signupTab").addEventListener("click", () => setMode("signup"));
+document.getElementById("loginTab").addEventListener("click", () => setMode("login"));
+forgotBtn.addEventListener("click", () => setMode("forgot"));
+backBtn.addEventListener("click", () => setMode("login"));
+
+supabase.auth.onAuthStateChange((event, session) => {
+  if (event === "PASSWORD_RECOVERY") {
+    setMode("recovery");
+    showMessage("Choose a new password for your account.");
+  } else if (event === "SIGNED_IN" && session && mode !== "recovery") {
+    window.location.assign("./account.html");
+  }
+});
+
+form.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  if (busy) return;
+  clearMessage();
+
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+  const username = document.getElementById("username").value.trim();
+
+  setBusy(true);
+  try {
+    if (mode === "signup") {
+      if (!/^[A-Za-z0-9_]{3,20}$/.test(username)) throw new Error("Choose a username with 3–20 letters, numbers or underscores.");
+      if (password.length < 8) throw new Error("Use a password with at least 8 characters.");
+      const redirectTo = new URL("./auth.html", window.location.href).href;
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: { emailRedirectTo: redirectTo, data: { username } }
+      });
+      if (error) throw error;
+      if (data.session) {
+        window.location.assign("./account.html");
+        return;
+      }
+      showMessage("Account request received. Check your email and confirm your address, then return here to sign in.");
+    } else if (mode === "login") {
+      if (!password) throw new Error("Enter your password.");
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) throw error;
+      window.location.assign("./account.html");
+      return;
+    } else if (mode === "forgot") {
+      const redirectTo = new URL("./auth.html", window.location.href).href;
+      const { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo });
+      if (error) throw error;
+      showMessage("If an account uses that email, a password-reset message will be sent. Check your inbox.");
+    } else if (mode === "recovery") {
+      const confirm = document.getElementById("confirmPassword").value;
+      if (password.length < 8) throw new Error("Use a new password with at least 8 characters.");
+      if (password !== confirm) throw new Error("The two passwords do not match.");
+      const { error } = await supabase.auth.updateUser({ password });
+      if (error) throw error;
+      await supabase.auth.signOut();
+      setMode("login");
+      showMessage("Password updated. Sign in with your new password.");
+    }
+  } catch (error) {
+    showMessage(error?.message || "Something went wrong. Please try again.", "error");
+  } finally {
+    setBusy(false);
+  }
+});
+
+setMode("signup");
+</script>
+</body>
+</html>
